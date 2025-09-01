@@ -1,2 +1,2 @@
 # capitalis
-Mono Repo foe capitalis
+Mono Repo for capitalis
