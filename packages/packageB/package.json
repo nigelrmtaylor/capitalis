@@ -1,1 +1,6 @@
-{\n  "name": "packageB",\n  "version": "0.1.0",\n  "private": true,\n  "main": "src/index.js"\n}
+{
+  "name": "@capitalis/package-b",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/index.js"
+}

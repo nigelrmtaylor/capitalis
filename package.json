@@ -1,0 +1,26 @@
+{
+  "name": "capitalis-monorepo",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter @capitalis/nuxt-app dev",
+    "build": "pnpm --filter @capitalis/nuxt-app build",
+    "start": "pnpm --filter @capitalis/nuxt-app start",
+    "lint": "pnpm --filter @capitalis/nuxt-app lint",
+    "format": "prettier --write .",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "husky": "^8.0.3",
+    "prettier": "^3.2.4",
+    "vue-tsc": "^3.0.6"
+  },
+  "packageManager": "pnpm@8.10.0",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+}

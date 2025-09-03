@@ -132,15 +132,70 @@ Capitalis provides a unified SaaS platform that consolidates all asset types int
   - Adaptive user experience optimization
   - Predictive analytics and forecasting
 
-## 5. Technical Requirements
+## 5. Architecture & Deployment
 
-### 5.1 Technology Stack
+### 5.1 System Architecture
+- **Frontend**: Nuxt 4 with Nuxt UI components
+- **API Layer**: GraphQL with PostGraphile 5
+- **Database**: PostgreSQL 18 with temporal and vector extensions
+- **Real-time Updates**: GraphQL Subscriptions
+- **Authentication**: JWT with role-based access control
+
+### 5.2 Deployment
+- **Container Orchestration**: Kubernetes (supports both cloud and on-premise)
+- **CI/CD**: GitOps workflow with ArgoCD
+- **Environments**: Development, Staging, Production
+- **Scaling**: Horizontal pod autoscaling based on load
+
+### 5.3 User Roles
+1. **Standard Users**
+   - Access to personal portfolio and assets
+   - Role-based permissions for different features
+   - Self-service account management
+
+2. **Admin Users**
+   - All standard user privileges
+   - Manage system configuration
+   - Update static/reference data
+   - User management
+
+3. **Audit Users**
+   - Read-only access to all data
+   - Audit logging and reporting
+   - No modification capabilities
+
+## 6. Technical Requirements
+
+### 6.0 Development Environment
+- **Package Manager**: pnpm (required)
+  - Ensures deterministic builds and efficient dependency management
+  - Required for proper workspace management in the monorepo
+  - All development and CI/CD processes must use pnpm
+  - Scripts in package.json should be pnpm-compatible
+
+- **Code Quality**:
+  - ESLint with `@nuxt/eslint-plugin` for Nuxt-specific linting rules
+  - Pre-commit hooks for automated code quality checks
+  - Consistent code formatting across the codebase
+  - TypeScript type checking in CI/CD pipeline
+
+### 6.1 Database Naming Conventions
+For database design, we follow these standards:
+- **Table Names**: Singular (e.g., `user`, `organization`, `portfolio`)
+- **Primary Keys**: `[table_name]_id` (e.g., `user_id`, `organization_id`)
+- **Foreign Keys**: Use the primary key name only (e.g., `user_id` instead of `owner_user_id`) to enable USING in joins
+- **Junction Tables**: Named by combining the two table names in alphabetical order (e.g., `user_organization`)
+
+See the [Data Model Documentation](data-model.md) for complete schema details.
+
+### 6.2 Technology Stack
 - **Frontend Framework**: Nuxt 4 with SSR/SPA hybrid architecture
 - **UI Components**: Nuxt UI for consistent design system
-- **Typography**: Nuxt Fonts with Roboto Condensed (body) and [HEADING_FONT_TBD] (headings)
-- **Nuxt Modules**: @nuxtjs/apollo, echarts module (with fallback implementation)
+- **Typography**: Nuxt Fonts with Roboto Condensed (body) and Playfair (headings)
+- **Nuxt 4 Modules**: @nuxtjs/apollo, @nuxtjs/i18n, echarts module (with fallback implementation)
 - **API Layer**: PostGraphile 5 (with PostGraphile 4 compatibility) for automatic GraphQL API generation
 - **GraphQL Client**: Apollo Client for efficient data management
+- **Database**: PostgreSQL 18 with tri-temporal and pgvector extensions
 - **Authentication**: Hanko (hosted → self-hosted migration) with passkeys and OAuth providers
 - **OAuth Providers**: GitHub, Google, Apple, Microsoft for frictionless onboarding
 - **AI Framework**: Mastra for AI agent orchestration and management
@@ -148,10 +203,9 @@ Capitalis provides a unified SaaS platform that consolidates all asset types int
   - Temporal for deterministic workflows (financial calculations, data processing)
   - Mastra Workflows and Networks for non-deterministic AI-driven processes
 - **Charting Library**: ECharts for interactive financial visualizations
-- **Database**: PostgreSQL 18 with tri-temporal and pgvector extensions
-- **Hosting**: Cloud-native deployment (AWS/Azure/GCP)
+- **Hosting**: Cloud-native deployment (AWS/Azure/GCP) with PostgreSQL 18
 
-### 5.2 Database Architecture
+### 6.3 Database Architecture
 - **Tri-Temporal Implementation**
   - Custom PostgreSQL 18 extensions for temporal data
   - Automated versioning and audit trails
@@ -164,11 +218,22 @@ Capitalis provides a unified SaaS platform that consolidates all asset types int
   - Enhanced AI agent context retrieval
 
 ### 5.3 Known Technical Considerations
-- **ECharts Integration**: Nuxt module compatibility issues identified, fallback implementation planned
+- **ECharts Integration**: Nuxt 4 module compatibility issues identified, fallback implementation planned
 - **PostGraphile Migration**: Support for both PostGraphile 4 and 5 during transition period
 - **Vector Database**: Optimized indexing strategies for financial data embeddings
 
-### 5.4 Performance Requirements
+### 5.4 Internationalization
+- **i18n Framework**: Nuxt i18n module for comprehensive internationalization support
+- **Supported Languages**: English (en), Spanish (es), French (fr), German (de), Chinese (zh-CN), Japanese (ja)
+- **Localization Features**:
+  - Route-based language switching
+  - Automatic browser language detection
+  - RTL (Right-to-Left) language support
+  - Localized number, date, and currency formatting
+  - Dynamic content translation management
+  - SEO-friendly language-specific URLs
+
+### 5.5 Performance Requirements
 - **Response Time**: < 200ms for standard queries
 - **Availability**: 99.9% uptime SLA
 - **Scalability**: Support for 10,000+ concurrent users
@@ -204,7 +269,18 @@ Capitalis provides a unified SaaS platform that consolidates all asset types int
 
 ## 7. User Experience Requirements
 
-### 7.1 Core User Flows
+### 7.1 Internationalization (i18n)
+- **Supported Languages**: English (en), French (fr), German (de), Spanish (es)
+- **Implementation**: Using Nuxt i18n module for seamless language integration
+- **Features**:
+  - Language switching in the application header
+  - Locale-based number and date formatting
+  - RTL support for applicable languages
+  - Language detection based on browser settings
+  - Fallback to English for untranslated content
+  - Support for dynamic content translation
+
+### 7.2 Core User Flows
 1. **Frictionless Onboarding Flow**
    - Social login with GitHub, Google, Apple, or Microsoft (single click)
    - Optional passkey enrollment for enhanced security

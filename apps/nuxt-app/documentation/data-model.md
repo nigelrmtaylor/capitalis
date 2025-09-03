@@ -95,6 +95,106 @@ This data model now provides:
 - **AI-Applied Tags**: Support for confidence scores on AI-generated tags
 - **Favorites System**: Users can mark their most-used tags as favorites# Capitalis - Tri-Temporal Data Model
 
+# Capitalis - Data Model
+
+## Database Version
+- **PostgreSQL 18** with the following key extensions:
+  - `pgvector` for vector similarity search
+  - `pg_trgm` for fast text search using trigram matching
+  - `pgcrypto` for secure hashing
+  - `uuid-ossp` for UUID generation
+  - `temporal_tables` for temporal data management
+  - `unaccent` for accent-insensitive search
+  - Custom extensions for tri-temporal support
+
+## Full-Text Search Implementation
+
+### Text Search Configuration
+```sql
+-- Create a custom search configuration for financial terms
+CREATE TEXT SEARCH CONFIGURATION financial (COPY = english);
+
+-- Add financial and investment-specific synonyms
+CREATE TEXT SEARCH DICTIONARY financial_ispell (
+    TEMPLATE = ispell,
+    DictFile = financial,
+    AffFile = financial,
+    StopWords = english
+);
+
+-- Configure the text search to use our custom dictionary
+ALTER TEXT SEARCH CONFIGURATION financial
+    ALTER MAPPING FOR asciiword, asciihword, hword_asciipart, word, hword, hword_part
+    WITH financial_ispell, english_stem;
+
+-- Enable GIN indexes for faster text search
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+CREATE EXTENSION IF NOT EXISTS unaccent;
+```
+
+### Searchable Columns
+- Instrument names and symbols
+- Transaction descriptions
+- Document contents
+- Notes and comments
+- User-generated content
+
+### Example Search Query
+```sql
+-- Search for instruments with name similar to 'Apple'
+SELECT * FROM instrument 
+WHERE name % 'Apple'  -- Trigram similarity match
+   OR name ILIKE '%Apple%'  -- Case-insensitive substring match
+ORDER BY similarity(name, 'Apple') DESC;
+
+-- Advanced full-text search with ranking
+SELECT 
+    id,
+    name,
+    ts_rank(
+        to_tsvector('financial', name || ' ' || description),
+        websearch_to_tsquery('financial', 'apple stock')
+    ) as rank
+FROM instrument
+WHERE to_tsvector('financial', name || ' ' || description) @@ 
+      websearch_to_tsquery('financial', 'apple stock')
+ORDER BY rank DESC;
+```
+
+## Naming Conventions
+
+### Database Objects
+- **Tables**: Use singular names (e.g., `user`, `organization`, `portfolio`)
+- **Primary Keys**: `[table_name]_id` (e.g., `user_id`, `organization_id`)
+- **Foreign Keys**: Use the primary key name only (e.g., `user_id` instead of `owner_user_id`) to enable USING in joins
+- **Junction Tables**: Combine the two table names in alphabetical order (e.g., `user_organization`)
+- **Indexes**: `idx_[table]_[columns]` (e.g., `idx_user_email`)
+- **Constraints**: `[table]_[type]_[details]` (e.g., `user_email_unique`)
+
+### Column Naming
+- Use `snake_case` for all column names
+- Be descriptive but concise
+- Use `_at` suffix for timestamps (e.g., `created_at`, `updated_at`)
+- Use `_by` suffix for user references (e.g., `created_by`, `updated_by`)
+- Use `is_` prefix for boolean flags (e.g., `is_active`)
+
+### Example Table Definition
+```sql
+CREATE TABLE user (
+    user_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    email TEXT NOT NULL,
+    first_name TEXT,
+    last_name TEXT,
+    is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    created_by UUID REFERENCES user
+);
+
+CREATE INDEX idx_user_email ON user(email);
+CREATE UNIQUE INDEX user_email_unique ON user(LOWER(email));
+```
+
 ## Core Principles
 
 ### Temporal Dimensions
