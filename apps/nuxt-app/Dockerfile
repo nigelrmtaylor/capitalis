@@ -1,5 +1,5 @@
 # Build stage
-FROM node:22-alpine as build
+FROM node:22-alpine AS build
 
 WORKDIR /app
 
@@ -12,8 +12,8 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc* ./
 # Copy app-specific files
 COPY apps/nuxt-app/package.json ./apps/nuxt-app/
 
-# Install all dependencies
-RUN pnpm install --frozen-lockfile
+# Install all dependencies (first without frozen lockfile to generate it if needed)
+RUN pnpm install --no-frozen-lockfile && pnpm install --frozen-lockfile
 
 # Copy application code
 COPY . .
@@ -25,19 +25,16 @@ WORKDIR /app/apps/nuxt-app
 RUN pnpm run build
 
 # Production stage
-FROM node:22-alpine as production
+FROM node:22-alpine AS production
 
 WORKDIR /app
 
-# Install pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
-
-# Copy only production dependencies
+# Copy built application and production dependencies from build stage
 COPY --from=build /app/node_modules ./node_modules
-COPY --from=build /app/apps/nuxt-app/node_modules ./node_modules
-
-# Copy built application from build stage
 COPY --from=build /app/apps/nuxt-app/.output ./.output
+
+# Ensure the node_modules/.bin is in PATH
+ENV PATH="/app/node_modules/.bin:$PATH"
 
 # Expose the port the app runs on
 EXPOSE 3000
