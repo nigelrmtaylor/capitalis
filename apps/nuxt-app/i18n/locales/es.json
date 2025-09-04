@@ -1,5 +1,45 @@
 {
+  "index": {
+    "welcome": "Bienvenido a",
+    "tagline": "Su solución integral de gestión de activos. Rastree, gestione y optimice sus recursos en un solo lugar.",
+    "cta": {
+      "get_started": "Comenzar",
+      "learn_more": "Saber más"
+    },
+    "features": {
+      "title": "Características poderosas",
+      "asset_tracking": {
+        "title": "Seguimiento de activos",
+        "description": "Realice un seguimiento de todos sus activos en una ubicación centralizada con actualizaciones en tiempo real."
+      },
+      "analytics": {
+        "title": "Análisis de rendimiento",
+        "description": "Obtenga información con análisis potentes e informes detallados de rendimiento."
+      },
+      "security": {
+        "title": "Seguro y privado",
+        "description": "Sus datos están protegidos con medidas de seguridad de nivel empresarial."
+      }
+    }
+  },
   "welcome": "Bienvenido a Capitalis",
+  "language": "Idioma",
+  "navigation": {
+    "home": "Inicio",
+    "dashboard": "Panel",
+    "assets": "Activos",
+    "reports": "Informes"
+  },
+  "language_switcher": "Cambiar idioma",
+  "sign_in": "Iniciar Sesión",
+  "footer": {
+    "copyright": "Todos los derechos reservados.",
+    "links": {
+      "privacy": "Política de privacidad",
+      "terms": "Términos de servicio",
+      "contact": "Contáctenos"
+    }
+  },
   "login": {
     "title": "Inicia sesión en tu cuenta",
     "email": "Correo electrónico",

@@ -1,5 +1,45 @@
 {
+  "index": {
+    "welcome": "Welcome to",
+    "tagline": "Your comprehensive asset management solution. Track, manage, and optimize your resources in one place.",
+    "cta": {
+      "get_started": "Get Started",
+      "learn_more": "Learn more"
+    },
+    "features": {
+      "title": "Powerful Features",
+      "asset_tracking": {
+        "title": "Asset Tracking",
+        "description": "Keep track of all your assets in one centralized location with real-time updates."
+      },
+      "analytics": {
+        "title": "Performance Analytics",
+        "description": "Gain insights with powerful analytics and detailed performance reports."
+      },
+      "security": {
+        "title": "Secure & Private",
+        "description": "Your data is protected with enterprise-grade security measures."
+      }
+    }
+  },
   "welcome": "Welcome to Capitalis",
+  "language": "Language",
+  "navigation": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "assets": "Assets",
+    "reports": "Reports"
+  },
+  "language_switcher": "Switch language",
+  "sign_in": "Sign In",
+  "footer": {
+    "copyright": "All rights reserved.",
+    "links": {
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "contact": "Contact Us"
+    }
+  },
   "login": {
     "title": "Sign in to your account",
     "email": "Email address",

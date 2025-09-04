@@ -1,12 +1,46 @@
 <script setup lang="ts">
 // These are auto-imported by Nuxt 3
 const isMobileMenuOpen = ref(false);
+const localePath = useLocalePath();
+const switchLocalePath = useSwitchLocalePath();
+const { locale: currentLocale, locales } = useI18n();
+// Create a typed ref for the current locale
+const locale = ref<string>(currentLocale.value as string);
+
+// Define the locale type based on the actual i18n config
+interface LocaleObject {
+  code: string;
+  file: string;
+  name?: string;
+}
+
+// Get typed locales from i18n config
+const typedLocales = computed(() => {
+  return (locales.value as Array<LocaleObject>).map(loc => ({
+    code: loc.code,
+    name: loc.name || loc.code.toUpperCase(),
+    file: loc.file || `${loc.code}.json`
+  }));
+});
 
 // Close mobile menu when route changes
 const route = useRoute();
 watch(() => route.path, () => {
   isMobileMenuOpen.value = false;
 });
+
+
+// Switch language function
+const switchLanguage = async (code: string) => {
+  const localeObj = typedLocales.value.find(loc => loc.code === code);
+  if (localeObj) {
+    locale.value = code;
+    const path = switchLocalePath(code as any); // Type assertion needed for i18n
+    if (path) {
+      await navigateTo(path);
+    }
+  }
+};
 </script>
 
 
@@ -23,35 +57,38 @@ watch(() => route.path, () => {
               </NuxtLink>
             </div>
 
-            <nav class="hidden sm:ml-6 sm:flex sm:space-x-8 font-sans">
+            <nav class="hidden sm:ml-6 sm:flex sm:space-x-8 font-heading">
               <NuxtLink to="/"
-                class="border-primary-500 text-muted hover:text-highlighted hover:border-secondary-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200"
+                class="border-primary-500 text-muted hover:text-highlighted hover:border-secondary-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-heading transition-colors duration-200"
                 active-class="border-primary-500 text-highlighted" exact>
-                Home
+                {{ $t('navigation.home') }}
               </NuxtLink>
-              <NuxtLink to="/dashboard"
-                class="border-transparent text-muted hover:text-highlighted hover:border-secondary-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200"
+              <NuxtLink to="/auth/dashboard"
+                class="border-transparent text-muted hover:text-highlighted hover:border-secondary-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-heading transition-colors duration-200"
                 active-class="border-primary-500 text-highlighted">
-                Dashboard
+                {{ $t('navigation.dashboard') }}
               </NuxtLink>
-              <NuxtLink to="/assets"
-                class="border-transparent text-muted hover:text-highlighted hover:border-secondary-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200"
+              <NuxtLink to="/auth/assets"
+                class="border-transparent text-muted hover:text-highlighted hover:border-secondary-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-heading transition-colors duration-200"
                 active-class="border-primary-500 text-highlighted">
-                Assets
+                {{ $t('navigation.assets') }}
               </NuxtLink>
-              <NuxtLink to="/reports"
-                class="border-transparent text-muted hover:text-highlighted hover:border-secondary-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200"
+              <NuxtLink to="/auth/reports"
+                class="border-transparent text-muted hover:text-highlighted hover:border-secondary-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-heading transition-colors duration-200"
                 active-class="border-primary-500 text-highlighted">
-                Reports
+                {{ $t('navigation.reports') }}
               </NuxtLink>
             </nav>
           </div>
 
-          <div class="hidden sm:ml-6 sm:flex sm:items-center">
+          <div class="hidden sm:ml-6 sm:flex sm:items-center space-x-4">
+            <!-- Language Switcher Component -->
+            <LayoutLanguageSwitcher />
+
             <UColorModeButton />
             <NuxtLink to="/login"
               class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
-              Sign in
+              {{ $t('sign_in') }}
             </NuxtLink>
           </div>
           <!-- Mobile menu button -->
@@ -77,31 +114,42 @@ watch(() => route.path, () => {
       <div class="sm:hidden" v-show="isMobileMenuOpen">
         <div class="pt-2 pb-3 space-y-1">
           <NuxtLink to="/"
-            class="bg-primary-50 border-primary-500 text-primary-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
+            class="bg-primary-50 border-primary-500 text-primary-700 block pl-3 pr-4 py-2 border-l-4 text-base font-heading"
             active-class="bg-primary-50 border-primary-500 text-primary-700" exact>
-            Home
+            {{ $t('navigation.home') }}
           </NuxtLink>
-          <NuxtLink to="/dashboard"
-            class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
+          <NuxtLink to="/auth/dashboard"
+            class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-heading"
             active-class="bg-primary-50 border-primary-500 text-primary-700">
-            Dashboard
+            {{ $t('navigation.dashboard') }}
           </NuxtLink>
-          <NuxtLink to="/assets"
-            class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
+          <NuxtLink to="/auth/assets"
+            class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-heading"
             active-class="bg-primary-50 border-primary-500 text-primary-700">
-            Assets
+            {{ $t('navigation.assets') }}
           </NuxtLink>
-          <NuxtLink to="/reports"
-            class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
+          <NuxtLink to="/auth/reports"
+            class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-heading"
             active-class="bg-primary-50 border-primary-500 text-primary-700">
-            Reports
+            {{ $t('navigation.reports') }}
           </NuxtLink>
           <div class="pt-4 pb-3 border-t border-gray-200">
             <div class="mt-3 space-y-1">
               <NuxtLink to="/login"
                 class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100">
-                Sign in
+                {{ $t('sign_in') }}
               </NuxtLink>
+              <div class="border-t border-gray-200 mt-2 pt-2">
+                <div class="px-4 py-2 text-sm font-medium text-gray-700">{{ $t('language') }}</div>
+                <button v-for="loc in typedLocales" :key="loc.code" @click="switchLanguage(loc.code)"
+                  class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center justify-between"
+                  :class="{ 'font-semibold text-primary-600': locale === loc.code }">
+                  <span>{{ loc.code.toUpperCase() }} - {{ loc.name || loc.code.toUpperCase() }}</span>
+                  <span v-if="locale === loc.code" class="text-primary-500">
+                    <UIcon name="i-heroicons-check-16-solid" class="w-4 h-4" />
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -116,11 +164,30 @@ watch(() => route.path, () => {
     </main>
 
     <!-- Footer -->
-    <footer class="">
-      <div class="max-w-7xl mx-auto py-6 px-4 overflow-hidden sm:px-6 lg:px-8">
-        <p class="mt-4 text-center text-base text-gray-500">
-          &copy; {{ new Date().getFullYear() }} Capitalis. All rights reserved.
-        </p>
+    <footer class="bg-white border-t border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+      <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <!-- Copyright -->
+          <p class="text-sm text-gray-500 dark:text-gray-400 text-center md:text-left">
+            &copy; {{ new Date().getFullYear() }} Capitalis. {{ $t('footer.copyright') }}
+          </p>
+
+          <!-- Footer Links -->
+          <div class="mt-4 md:mt-0 flex space-x-6">
+            <NuxtLink to="/privacy"
+              class="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors">
+              {{ $t('footer.links.privacy') }}
+            </NuxtLink>
+            <NuxtLink to="/terms"
+              class="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors">
+              {{ $t('footer.links.terms') }}
+            </NuxtLink>
+            <NuxtLink to="/contact"
+              class="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors">
+              {{ $t('footer.links.contact') }}
+            </NuxtLink>
+          </div>
+        </div>
       </div>
     </footer>
   </div>

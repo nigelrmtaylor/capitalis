@@ -12,10 +12,12 @@ export default defineNuxtConfig({
       langDir: 'locales',
       lazy: true,
       locales: [
-        { code: 'en', file: 'en.json' },
-        { code: 'fr', file: 'fr.json' },
-        { code: 'de', file: 'de.json' },
-        { code: 'es', file: 'es.json' }
+        { code: 'en', name: 'English', file: 'en.json' },
+        { code: 'fr', name: 'Français', file: 'fr.json' },
+        { code: 'de', name: 'Deutsch', file: 'de.json' },
+        { code: 'es', name: 'Español', file: 'es.json' },
+        { code: 'zh', name: '简体中文', file: 'zh.json' },
+        { code: 'pt', name: 'Português', file: 'pt.json' }
       ]
     }],
     '@pinia/nuxt'

@@ -1,5 +1,45 @@
 {
+  "index": {
+    "welcome": "Willkommen bei",
+    "tagline": "Ihre umfassende Vermögensverwaltungslösung. Verfolgen, verwalten und optimieren Sie Ihre Ressourcen an einem Ort.",
+    "cta": {
+      "get_started": "Jetzt starten",
+      "learn_more": "Mehr erfahren"
+    },
+    "features": {
+      "title": "Leistungsstarke Funktionen",
+      "asset_tracking": {
+        "title": "Vermögensverfolgung",
+        "description": "Behalten Sie alle Ihre Vermögenswerte an einem zentralen Ort mit Echtzeit-Updates im Auge."
+      },
+      "analytics": {
+        "title": "Leistungsanalyse",
+        "description": "Gewinnen Sie Einblicke durch leistungsstarke Analysen und detaillierte Leistungsberichte."
+      },
+      "security": {
+        "title": "Sicher und privat",
+        "description": "Ihre Daten sind durch unternehmensweite Sicherheitsmaßnahmen geschützt."
+      }
+    }
+  },
   "welcome": "Willkommen bei Capitalis",
+  "language": "Sprache",
+  "navigation": {
+    "home": "Startseite",
+    "dashboard": "Dashboard",
+    "assets": "Vermögenswerte",
+    "reports": "Berichte"
+  },
+  "language_switcher": "Sprache wechseln",
+  "sign_in": "Anmelden",
+  "footer": {
+    "copyright": "Alle Rechte vorbehalten.",
+    "links": {
+      "privacy": "Datenschutzerklärung",
+      "terms": "Nutzungsbedingungen",
+      "contact": "Kontakt"
+    }
+  },
   "login": {
     "title": "Melden Sie sich bei Ihrem Konto an",
     "email": "E-Mail-Adresse",

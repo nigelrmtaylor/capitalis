@@ -1,0 +1,59 @@
+{
+  "index": {
+    "welcome": "欢迎使用",
+    "tagline": "您的一站式资产管理解决方案。在一个地方跟踪、管理和优化您的资源。",
+    "cta": {
+      "get_started": "开始使用",
+      "learn_more": "了解更多"
+    },
+    "features": {
+      "title": "强大功能",
+      "asset_tracking": {
+        "title": "资产追踪",
+        "description": "在集中位置实时跟踪您的所有资产。"
+      },
+      "analytics": {
+        "title": "性能分析",
+        "description": "通过强大的分析和详细的性能报告获取洞察。"
+      },
+      "security": {
+        "title": "安全与隐私",
+        "description": "您的数据受到企业级安全措施的保护。"
+      }
+    }
+  },
+  "welcome": "欢迎使用 Capitalis",
+  "language": "语言",
+  "navigation": {
+    "home": "首页",
+    "dashboard": "仪表盘",
+    "assets": "资产",
+    "reports": "报告"
+  },
+  "language_switcher": "切换语言",
+  "sign_in": "登录",
+  "footer": {
+    "copyright": "保留所有权利。",
+    "links": {
+      "privacy": "隐私政策",
+      "terms": "服务条款",
+      "contact": "联系我们"
+    }
+  },
+  "login": {
+    "title": "登录您的账户",
+    "email": "电子邮件地址",
+    "password": "密码",
+    "rememberMe": "记住我",
+    "forgotPassword": "忘记密码？",
+    "signIn": "登录",
+    "signingIn": "登录中...",
+    "noAccount": "没有账户？",
+    "signUp": "注册"
+  },
+  "errors": {
+    "required": "{field} 是必填项",
+    "email": "请输入有效的电子邮件地址",
+    "minLength": "{field} 至少需要 {length} 个字符"
+  }
+}

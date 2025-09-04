@@ -1,0 +1,61 @@
+{
+  "index": {
+    "welcome": "Bem-vindo ao",
+    "tagline": "Sua solução completa de gerenciamento de ativos. Acompanhe, gerencie e otimize seus recursos em um só lugar.",
+    "cta": {
+      "get_started": "Começar Agora",
+      "learn_more": "Saiba Mais"
+    },
+    "features": {
+      "title": "Recursos Poderosos",
+      "asset_tracking": {
+        "title": "Acompanhamento de Ativos",
+        "description": "Acompanhe todos os seus ativos em um local centralizado com atualizações em tempo real."
+      },
+      "analytics": {
+        "title": "Análise de Desempenho",
+        "description": "Obtenha insights com análises poderosas e relatórios detalhados de desempenho."
+      },
+      "security": {
+        "title": "Seguro e Privado",
+        "description": "Seus dados estão protegidos com medidas de segurança de nível empresarial."
+      }
+    }
+  },
+  "welcome": "Bem-vindo ao Capitalis",
+  "language": "Idioma",
+  "navigation": {
+    "home": "Início",
+    "dashboard": "Painel",
+    "assets": "Ativos",
+    "reports": "Relatórios"
+  },
+  "language_switcher": "Mudar idioma",
+  "sign_in": "Entrar",
+  "footer": {
+    "copyright": "Todos os direitos reservados.",
+    "links": {
+      "privacy": "Política de Privacidade",
+      "terms": "Termos de Serviço",
+      "contact": "Fale Conosco"
+    }
+  },
+  "login": {
+    "title": "Entrar na sua conta",
+    "email": "E-mail",
+    "password": "Senha",
+    "submit": "Entrar",
+    "forgot_password": "Esqueceu sua senha?",
+    "no_account": "Não tem uma conta?",
+    "sign_up": "Cadastre-se"
+  },
+  "errors": {
+    "required": "Este campo é obrigatório",
+    "email": "Por favor, insira um e-mail válido",
+    "min_length": "Deve ter pelo menos {min} caracteres",
+    "auth": {
+      "invalid_credentials": "Credenciais inválidas. Por favor, tente novamente.",
+      "unknown_error": "Ocorreu um erro. Por favor, tente novamente mais tarde."
+    }
+  }
+}
