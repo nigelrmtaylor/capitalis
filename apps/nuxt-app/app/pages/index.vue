@@ -4,7 +4,7 @@ definePageMeta({
   layout: 'default'
 });
 
-const { t } = useI18n();
+const { t } = useI18n();  
 </script>
 
 <template>
