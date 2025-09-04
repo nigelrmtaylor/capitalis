@@ -26,6 +26,9 @@ module.exports = {
     'vue/attribute-hyphenation': ['error', 'always'], // Enforce hyphenation in template
     'vue/v-on-event-hyphenation': ['error', 'always'], // Enforce hyphenation in events
     'prettier/prettier': 'error', // Enable prettier rules
+    "vue/block-order": ["error", {
+      "order": ["script", "template", "style"]
+    }]
   },
   settings: {
     'import/resolver': {

@@ -1,0 +1,19 @@
+{
+  "welcome": "Bienvenido a Capitalis",
+  "login": {
+    "title": "Inicia sesión en tu cuenta",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "rememberMe": "Recordarme",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "signIn": "Iniciar sesión",
+    "signingIn": "Iniciando sesión...",
+    "noAccount": "¿No tienes una cuenta?",
+    "signUp": "Regístrate"
+  },
+  "errors": {
+    "required": "{field} es obligatorio",
+    "email": "Por favor ingresa un correo electrónico válido",
+    "minLength": "{field} debe tener al menos {length} caracteres"
+  }
+}

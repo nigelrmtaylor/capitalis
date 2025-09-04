@@ -77,10 +77,10 @@
 </template>
 
 <script setup lang="ts">
-import { loginSchema } from '~/utils/validators';
+import { loginSchema, type LoginFormValues } from '../../../utils/validators';
 
 const emit = defineEmits<{
-  (e: 'submit', values: { email: string; password: string; rememberMe?: boolean }): void;
+  (e: 'submit', values: LoginFormValues): void;
 }>();
 
 const {
@@ -96,6 +96,12 @@ const {
 });
 
 const onSubmit = handleSubmit((values) => {
-  emit('submit', values);
+  // Ensure the values match the expected type
+  const formValues: LoginFormValues = {
+    email: values.email as string,
+    password: values.password as string,
+    rememberMe: values.rememberMe as boolean | undefined
+  };
+  emit('submit', formValues);
 });
 </script>

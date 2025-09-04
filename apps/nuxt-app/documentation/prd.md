@@ -222,7 +222,17 @@ See the [Data Model Documentation](data-model.md) for complete schema details.
 - **PostGraphile Migration**: Support for both PostGraphile 4 and 5 during transition period
 - **Vector Database**: Optimized indexing strategies for financial data embeddings
 
-### 5.4 Internationalization
+### 5.4 UI Components and Icons
+
+- **Icon Library**: Nuxt UI v4 includes built-in support for Nuxt Icons
+  - No additional installation required as it's part of the Nuxt UI package
+  - Provides access to multiple icon sets (including Hero Icons, Material Icons, etc.)
+  - Tree-shaking support for optimal bundle size
+  - TypeScript support for better developer experience
+  - Simple and consistent API for all icon sets
+  - Used throughout the application for consistent visual language
+
+### 5.5 Internationalization
 - **i18n Framework**: Nuxt i18n module for comprehensive internationalization support
 - **Supported Languages**: English (en), Spanish (es), French (fr), German (de), Chinese (zh-CN), Japanese (ja)
 - **Localization Features**:

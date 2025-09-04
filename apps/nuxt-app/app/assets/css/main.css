@@ -1,18 +1,29 @@
 @import "tailwindcss";
+@import "@nuxt/ui";
 
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-  }
-  
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-  }
-  
-  body {
-    background-color: hsl(var(--background));
-    color: hsl(var(--foreground));
-  }
+@theme static {
+
+  --font-sans: 'Roboto Condensed', sans-serif;
+  --font-heading: 'Roboto Slab', sans-serif;
+
+  --breakpoint-3xl: 1920px;
+
 }
+
+/* Base styles */
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+}
+
+.dark {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+}
+
+body {
+
+  color: #333;
+}
+
+/* Tailwind is imported automatically by Nuxt UI */

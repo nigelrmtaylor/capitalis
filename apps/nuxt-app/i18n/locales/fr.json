@@ -1,0 +1,19 @@
+{
+  "welcome": "Bienvenue sur Capitalis",
+  "login": {
+    "title": "Connectez-vous à votre compte",
+    "email": "Adresse e-mail",
+    "password": "Mot de passe",
+    "rememberMe": "Se souvenir de moi",
+    "forgotPassword": "Mot de passe oublié ?",
+    "signIn": "Se connecter",
+    "signingIn": "Connexion en cours...",
+    "noAccount": "Vous n'avez pas de compte ?",
+    "signUp": "S'inscrire"
+  },
+  "errors": {
+    "required": "{field} est requis",
+    "email": "Veuillez entrer une adresse e-mail valide",
+    "minLength": "{field} doit contenir au moins {length} caractères"
+  }
+}
