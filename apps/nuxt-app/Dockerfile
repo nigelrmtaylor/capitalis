@@ -12,8 +12,8 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc* ./
 # Copy app-specific files
 COPY apps/nuxt-app/package.json ./apps/nuxt-app/
 
-# Install dependencies
-RUN pnpm install --frozen-lockfile
+# Install dependencies (first time without frozen lockfile to generate it if needed)
+RUN pnpm install --no-frozen-lockfile && pnpm install --frozen-lockfile
 
 # Copy application code
 COPY . .
@@ -39,7 +39,7 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc* ./
 COPY apps/nuxt-app/package.json ./apps/nuxt-app/
 
 # Install only production dependencies
-RUN pnpm install --prod --frozen-lockfile
+RUN pnpm install --prod --frozen-lockfile || (pnpm install --prod --no-frozen-lockfile && pnpm install --prod --frozen-lockfile)
 
 # Copy built application from build stage
 COPY --from=build /app/apps/nuxt-app/.output ./.output
