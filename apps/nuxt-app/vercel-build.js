@@ -15,13 +15,16 @@ process.env.HUSKY = '0';
 
 try {
   console.log('📦 Building Nuxt application for Vercel...');
-  // Use the production build script that skips TypeScript checking
-  execSync('pnpm run build:vercel-prod', { 
+  // Use the production build script with custom Vercel config
+  console.log('Using custom Nuxt config for Vercel deployment...');
+  execSync('NODE_ENV=production pnpm run build:vercel-prod', { 
     stdio: 'inherit',
     env: {
       ...process.env,
       HUSKY: '0',
-      CI: 'true'
+      CI: 'true',
+      NODE_ENV: 'production',
+      NUXT_TYPESCRIPT_CHECK: 'false'
     }
   });
   console.log('✅ Build completed successfully!');

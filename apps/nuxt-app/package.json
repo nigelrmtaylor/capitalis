@@ -5,7 +5,7 @@
   "type": "module",
   "packageManager": "pnpm@8.10.0",
   "engines": {
-    "node": ">=18.0.0",
+    "node": ">=22.0.0",
     "pnpm": ">=8.0.0"
   },
   "scripts": {
@@ -13,7 +13,7 @@
     "dev": "nuxt dev",
     "build": "nuxt build",
     "build:vercel": "NITRO_PRESET=vercel nuxt build --no-typecheck",
-    "build:vercel-prod": "NITRO_PRESET=vercel NODE_ENV=production nuxt build --no-typecheck",
+    "build:vercel-prod": "NODE_ENV=production nuxt build --config nuxt.config.vercel.ts",
     "start": "nuxt start",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
@@ -30,6 +30,7 @@
     "@nuxt/ui": "4.0.0-alpha.1",
     "@nuxtjs/color-mode": "^3.3.1",
     "@nuxtjs/hanko": "^1.0.0",
+    "vue-tsc": "^3.0.6",
     "@nuxtjs/i18n": "^10.0.6",
     "@nuxtjs/robots": "^5.5.1",
     "@pinia/nuxt": "^0.11.2",
