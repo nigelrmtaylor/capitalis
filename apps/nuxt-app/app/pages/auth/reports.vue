@@ -1,6 +1,5 @@
-<script lang="ts">
-</script>
+<script lang="ts"></script>
 
 <template>
-    <h1>Reports</h1>
+  <h1>Reports</h1>
 </template>

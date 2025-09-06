@@ -1,38 +1,49 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { defineNuxtConfig } from 'nuxt/config'
+import process from 'node:process'
+
+// Import Hanko module types
+import type { ModuleOptions } from '@nuxtjs/hanko'
+
 export default defineNuxtConfig({
   // CSS configuration
   css: ['./assets/css/main.css'],
-  
+
   // Module configuration
   modules: [
     '@nuxt/ui',
-    ['@nuxtjs/i18n', {
-      strategy: 'no_prefix',
-      defaultLocale: 'en',
-      langDir: 'locales',
-      lazy: true,
-      locales: [
-        { code: 'en', name: 'English', file: 'en.json' },
-        { code: 'fr', name: 'Français', file: 'fr.json' },
-        { code: 'de', name: 'Deutsch', file: 'de.json' },
-        { code: 'es', name: 'Español', file: 'es.json' },
-        { code: 'zh', name: '简体中文', file: 'zh.json' },
-        { code: 'pt', name: 'Português', file: 'pt.json' }
-      ]
-    }],
-    '@pinia/nuxt'
+    '@nuxtjs/i18n',
+    '@pinia/nuxt',
+    '@nuxtjs/hanko'
   ],
-  
-  
+
+  hanko: {
+    apiUrl: process.env.HANKO_API_URL || 'https://c4a5a608-41fc-4c69-abdd-75e5f63315e9.hanko.io'
+  } as ModuleOptions,
+
+  i18n: {
+    strategy: 'no_prefix',
+    defaultLocale: 'en',
+    langDir: 'locales',
+    locales: [
+      { code: 'en', name: 'English', file: 'en.json' },
+      { code: 'fr', name: 'Français', file: 'fr.json' },
+      { code: 'de', name: 'Deutsch', file: 'de.json' },
+      { code: 'es', name: 'Español', file: 'es.json' },
+      { code: 'zh', name: '简体中文', file: 'zh.json' },
+      { code: 'pt', name: 'Português', file: 'pt.json' }
+    ]
+  },
+
   compatibilityDate: '2025-09-03',
   devtools: { enabled: true },
-  
+
   // TypeScript Configuration
   typescript: {
     strict: true,
     typeCheck: true
   },
-  
+
   // Runtime Configuration
   // UI and Theme Configuration
   colorMode: {
@@ -41,13 +52,9 @@ export default defineNuxtConfig({
     fallback: 'light',
     storageKey: 'nuxt-color-mode'
   },
-  
+
   // UI Module Configuration
-  ui: {
-    global: true,
-    icons: ['mdi', 'heroicons'],
-    safelistColors: ['primary', 'secondary', 'success', 'info', 'warning', 'error']
-  },
+  ui: {},
 
   runtimeConfig: {
     public: {
@@ -68,6 +75,7 @@ export default defineNuxtConfig({
     define: {
       'process.env': {}
     },
+
     optimizeDeps: {
       exclude: ['fsevents'],
       include: []

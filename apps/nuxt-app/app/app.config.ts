@@ -1,3 +1,7 @@
+// https://nuxt.com/docs/guide/directory-structure/app-config
+// This file is auto-imported in Nuxt 4
+
+// eslint-disable-next-line no-undef
 export default defineAppConfig({
     ui: {
         // Font configuration for Nuxt UI v4
@@ -37,10 +41,10 @@ export default defineAppConfig({
             error: 'red',
             neutral: 'zinc'
         },
-        
+
         // Dark mode configuration
         darkMode: true,
-        
+
         // Semantic colors for dark/light mode
         variables: {
             light: {
@@ -52,7 +56,7 @@ export default defineAppConfig({
                 foreground: 'var(--color-gray-200)'
             }
         },
-        
+
         // Container configuration
         container: {
             center: true,

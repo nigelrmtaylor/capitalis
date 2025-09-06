@@ -1,107 +1,94 @@
 <template>
-  <form @submit="onSubmit" class="space-y-4">
-    <div>
-      <label for="email" class="block text-sm font-medium text-gray-700">
-        Email
-      </label>
-      <input
-        id="email"
-        v-model="values.email"
+  <UForm :state="formState" class="space-y-4" @submit="handleSubmit">
+    <UFormGroup label="Email" name="email" required>
+      <UInput 
+        v-model="formState.email"
         type="email"
-        name="email"
-        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
-        :class="{
-          'border-red-500': errors.email,
-          'border-gray-300': !errors.email,
-        }"
-        @blur="validateField('email')"
+        placeholder="your@email.com"
+        :disabled="isSubmitting"
+        autocomplete="email"
       />
-      <p v-if="errors.email" class="mt-1 text-sm text-red-600">
-        {{ errors.email }}
-      </p>
-    </div>
+    </UFormGroup>
 
-    <div>
-      <label for="password" class="block text-sm font-medium text-gray-700">
-        Password
-      </label>
-      <input
-        id="password"
-        v-model="values.password"
+    <UFormGroup label="Password" name="password" required>
+      <UInput 
+        v-model="formState.password"
         type="password"
-        name="password"
-        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
-        :class="{
-          'border-red-500': errors.password,
-          'border-gray-300': !errors.password,
-        }"
-        @blur="validateField('password')"
+        placeholder="••••••••"
+        :disabled="isSubmitting"
+        autocomplete="current-password"
       />
-      <p v-if="errors.password" class="mt-1 text-sm text-red-600">
-        {{ errors.password }}
-      </p>
-    </div>
+    </UFormGroup>
 
     <div class="flex items-center justify-between">
-      <div class="flex items-center">
-        <input
-          id="remember-me"
-          v-model="values.rememberMe"
-          name="remember-me"
-          type="checkbox"
-          class="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
-        />
-        <label for="remember-me" class="ml-2 block text-sm text-gray-900">
-          Remember me
-        </label>
-      </div>
-
-      <div class="text-sm">
-        <a href="#" class="font-medium text-primary-600 hover:text-primary-500">
-          Forgot your password?
-        </a>
-      </div>
-    </div>
-
-    <div>
-      <button
-        type="submit"
+      <UCheckbox 
+        v-model="formState.rememberMe" 
+        name="rememberMe"
+        label="Remember me" 
         :disabled="isSubmitting"
-        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        <span v-if="isSubmitting">Signing in...</span>
-        <span v-else>Sign in</span>
-      </button>
+      />
+      
+      <div class="text-sm">
+        <NuxtLink to="/forgot-password" class="font-medium text-primary-600 hover:text-primary-500">
+          Forgot your password?
+        </NuxtLink>
+      </div>
     </div>
-  </form>
+
+    <UButton
+      type="submit"
+      block
+      color="primary"
+      :loading="isSubmitting"
+      :disabled="isSubmitting"
+    >
+      {{ isSubmitting ? 'Signing in...' : 'Sign in' }}
+    </UButton>
+  </UForm>
 </template>
 
 <script setup lang="ts">
-import { loginSchema, type LoginFormValues } from '../../../utils/validators';
+import type { FormSubmitEvent } from '#ui/types/form'
 
-const emit = defineEmits<{
-  (e: 'submit', values: LoginFormValues): void;
-}>();
+const isSubmitting = ref(false)
 
-const {
-  handleSubmit,
-  errors,
-  values,
-  validateField,
-  isSubmitting,
-} = useForm(loginSchema, {
+const formState = reactive({
   email: '',
   password: '',
-  rememberMe: false,
-});
+  rememberMe: false
+})
 
-const onSubmit = handleSubmit((values) => {
-  // Ensure the values match the expected type
-  const formValues: LoginFormValues = {
-    email: values.email as string,
-    password: values.password as string,
-    rememberMe: values.rememberMe as boolean | undefined
-  };
-  emit('submit', formValues);
-});
+type EmitEvents = {
+  submit: [data: typeof formState]
+}
+
+const emit = defineEmits<EmitEvents>()
+
+const handleSubmit = async (event: FormSubmitEvent<typeof formState>) => {
+  try {
+    isSubmitting.value = true
+    await emit('submit', event.data)
+  } finally {
+    isSubmitting.value = false
+  }
+}
+
+// Handle server-side validation errors if needed
+const setServerErrors = (fieldErrors: Record<string, string>) => {
+  // Nuxt UI will automatically show these errors in the form
+  // as long as the field names match
+  for (const [field, message] of Object.entries(fieldErrors)) {
+    // You can add custom error handling here if needed
+    console.warn(`Server validation error for ${field}:`, message)
+  }
+}
+
+defineExpose({
+  setServerErrors,
+  resetForm: () => {
+    formState.email = ''
+    formState.password = ''
+    formState.rememberMe = false
+  }
+})
 </script>

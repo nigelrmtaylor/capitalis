@@ -1,9 +1,10 @@
 <script setup lang="ts">
-definePageMeta({
-  layout: 'default'
-})
+  import { definePageMeta } from '#imports'
+  definePageMeta({
+    layout: 'default',
+  })
 </script>
 
 <template>
-    <h1>register</h1>
+  <h1> register </h1>
 </template>

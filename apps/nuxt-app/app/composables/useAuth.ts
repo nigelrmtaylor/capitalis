@@ -1,30 +1,53 @@
 import { ref, onMounted } from 'vue';
-import { navigateTo } from '#imports';
-import type { Hanko } from '@teamhanko/hanko-frontend-sdk';
+import { navigateTo, useNuxtApp } from '#imports';
+import type { User } from '@teamhanko/hanko-frontend-sdk';
 
 /**
  * Unified authentication composable for Hanko authentication
  * Combines functionality from both useAuth.ts and useHankoAuth.ts
  */
 export const useAuth = () => {
-  const config = useRuntimeConfig();
-  
+
   // State
-  const user = ref<any>(null);
+  interface AuthUser extends Partial<User> {
+    authenticated: boolean;
+    email?: string;
+  }
+
+  const user = ref<AuthUser | null>(null);
   const isAuthenticated = ref(false);
   const isLoading = ref(true);
   const error = ref<Error | null>(null);
-  
-  let hanko: Hanko | null = null;
-  
-  // Initialize Hanko client
-  const initHanko = () => {
-    if (process.client && !hanko) {
-      const { $hanko } = useNuxtApp();
-      hanko = $hanko as Hanko;
+
+  // Initialize auth state
+  if (import.meta.client) {
+    try {
+      // Get the Hanko client from the plugin
+      const nuxtApp = useNuxtApp();
+      // Use type assertion with any to bypass TypeScript errors
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const hankoFn = (nuxtApp as any).$hanko;
+      
+      if (typeof hankoFn === 'function') {
+        const hanko = hankoFn();
+        
+        if (hanko && typeof hanko.onAuthFlowCompleted === 'function') {
+          // Register auth flow completion handler
+          hanko.onAuthFlowCompleted((userData: Record<string, unknown>) => {
+            isAuthenticated.value = true;
+            user.value = { 
+              authenticated: true,
+              email: (userData.email as string) || '',
+              ...userData as Partial<User>
+            };
+            isLoading.value = false;
+          });
+        }
+      }
+    } catch (err) {
+      console.error('Failed to initialize Hanko client:', err);
     }
-    return hanko;
-  };
+  }
 
   /**
    * Check if the user is authenticated
@@ -32,10 +55,10 @@ export const useAuth = () => {
    */
   const checkAuth = async () => {
     try {
-      if (!process.client) return;
-      
+      if (!import.meta.client) return;
+
       isLoading.value = true;
-      
+
       // Check for authentication token
       const token = localStorage.getItem('hanko_token');
       if (token) {
@@ -68,14 +91,14 @@ export const useAuth = () => {
     try {
       isLoading.value = true;
       error.value = null;
-      
+
       // Use the Hanko web component for login
       // This avoids direct API calls to private methods
-      const loginEvent = new CustomEvent('hanko-login-requested', { 
-        detail: { email } 
+      const loginEvent = new CustomEvent('hanko-login-requested', {
+        detail: { email }
       });
       document.dispatchEvent(loginEvent);
-      
+
       // User will receive a magic link via email
       return { success: true };
     } catch (err) {
@@ -95,7 +118,7 @@ export const useAuth = () => {
     try {
       // Simple logout by removing the token
       localStorage.removeItem('hanko_token');
-      
+
       user.value = null;
       isAuthenticated.value = false;
       await navigateTo('/login');
@@ -107,11 +130,11 @@ export const useAuth = () => {
   };
 
   // Check auth status when the composable is used
-  onMounted(() => {
-    if (process.client) {
+  if (import.meta.client) {
+    onMounted(() => {
       checkAuth();
-    }
-  });
+    });
+  }
 
   return {
     user,
