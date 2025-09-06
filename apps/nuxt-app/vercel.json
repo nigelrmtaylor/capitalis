@@ -1,6 +1,6 @@
 {
   "framework": "nuxtjs",
-  "buildCommand": "node vercel-build.js",
+  "buildCommand": "bash vercel-build.sh",
   "outputDirectory": ".output/public",
   "devCommand": "pnpm run dev",
   "installCommand": "pnpm install",
