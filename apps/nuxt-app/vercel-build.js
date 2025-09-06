@@ -15,15 +15,13 @@ process.env.HUSKY = '0';
 
 try {
   console.log('📦 Building Nuxt application for Vercel...');
-  // Skip TypeScript checking during build to avoid vue-tsc dependency
-  execSync('NUXT_TYPESCRIPT_CHECK=false pnpm run build', { 
+  // Use the production build script that skips TypeScript checking
+  execSync('pnpm run build:vercel-prod', { 
     stdio: 'inherit',
     env: {
       ...process.env,
-      NITRO_PRESET: 'vercel',
       HUSKY: '0',
-      CI: 'true',
-      NUXT_TYPESCRIPT_CHECK: 'false'
+      CI: 'true'
     }
   });
   console.log('✅ Build completed successfully!');
