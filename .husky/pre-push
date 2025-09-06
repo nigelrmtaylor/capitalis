@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Run lint and typecheck in the nuxt-app directory
+cd apps/nuxt-app
+pnpm run lint && pnpm run typecheck && pnpm run test

@@ -1,0 +1,10 @@
+typescript.includeWorkspace=true
+typescript.tsConfig.compilerOptions.moduleResolution=bundler
+typescript.tsConfig.compilerOptions.skipLibCheck=true
+typescript.tsConfig.compilerOptions.types[]=node
+typescript.tsConfig.compilerOptions.types[]="@nuxtjs/i18n"
+
+# Improve auto-imports
+autoImports.transform.exclude=[]
+autoImports.global=true
+autoImports.dirs[]="./composables"
