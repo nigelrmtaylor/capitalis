@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 
+// Import the build process using ES modules
+import { execSync } from 'child_process';
+
 // This script is used by Vercel to build the application
 // It ensures Husky doesn't run in CI environments
 
@@ -9,9 +12,6 @@ console.log('🚀 Starting Vercel build process...');
 process.env.NITRO_PRESET = 'vercel';
 process.env.CI = 'true';
 process.env.HUSKY = '0';
-
-// Import the build process
-const { execSync } = require('child_process');
 
 try {
   console.log('📦 Building Nuxt application for Vercel...');
