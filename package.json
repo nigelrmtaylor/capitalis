@@ -7,7 +7,7 @@
     "start": "pnpm --filter @capitalis/nuxt-app start",
     "lint": "pnpm --filter @capitalis/nuxt-app lint",
     "format": "prettier --write .",
-    "prepare": "husky install"
+    "prepare": "if [ -n \"$CI\" ]; then exit 0; else husky install; fi"
   },
   "devDependencies": {
     "husky": "^8.0.3",
