@@ -10,8 +10,10 @@
   },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
+    "prepare": "cd ../.. && is-ci || husky",
     "dev": "nuxt dev",
     "build": "nuxt build",
+    "build:vercel": "NITRO_PRESET=vercel nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
