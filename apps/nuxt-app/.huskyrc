@@ -1,0 +1,4 @@
+# Disable Husky in CI environments
+if [ "$CI" = "true" ]; then
+  exit 0
+fi

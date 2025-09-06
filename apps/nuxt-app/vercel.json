@@ -1,0 +1,11 @@
+{
+  "framework": "nuxt",
+  "buildCommand": "node vercel-build.js",
+  "outputDirectory": ".output/public",
+  "devCommand": "pnpm run dev",
+  "installCommand": "pnpm install",
+  "regions": ["fra1"],
+  "github": {
+    "silent": true
+  }
+}
