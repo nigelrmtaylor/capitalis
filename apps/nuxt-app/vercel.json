@@ -1,5 +1,5 @@
 {
-  "framework": "nuxt",
+  "framework": "nuxtjs",
   "buildCommand": "node vercel-build.js",
   "outputDirectory": ".output/public",
   "devCommand": "pnpm run dev",
