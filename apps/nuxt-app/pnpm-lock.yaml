@@ -91,6 +91,9 @@ devDependencies:
   eslint-plugin-vue:
     specifier: ^10.4.0
     version: 10.4.0(@typescript-eslint/parser@8.42.0)(eslint@9.34.0)(vue-eslint-parser@10.2.0)
+  is-ci:
+    specifier: ^4.1.0
+    version: 4.1.0
   lint-staged:
     specifier: ^16.1.6
     version: 16.1.6
@@ -6723,6 +6726,13 @@ packages:
     engines: {node: '>=18.20'}
     dependencies:
       builtin-modules: 5.0.0
+    dev: true
+
+  /is-ci@4.1.0:
+    resolution: {integrity: sha512-Ab9bQDQ11lWootZUI5qxgN2ZXwxNI5hTwnsvOc1wyxQ7zQ8OkEDw79mI0+9jI3x432NfwbVRru+3noJfXF6lSQ==}
+    hasBin: true
+    dependencies:
+      ci-info: 4.3.0
     dev: true
 
   /is-core-module@2.16.1:
